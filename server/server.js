@@ -1,11 +1,11 @@
 const express = require('express');
 const socketHandler = require('./services/socketHandler');
-// const path = require('path')
+const path = require('path')
 
 const sequelize = require('./db/db');
 const clientRouter = require('./routes/client.route');
 
-sequelize.sync({force: true})
+sequelize.sync()
   .then(() => {
     console.log("Synced db.");
   })
@@ -24,8 +24,10 @@ const io = require('socket.io')(http, {
   }
 });
 
-
-// app.use('/',express.static(path.join(__dirname, '../dist')))
+if (process.env.NODE_ENV !== 'dev') {
+  app.use('/',express.static(path.join(__dirname, '../dist')))
+}
+  
 
 io.on('connection', (socket) => {
     socketHandler(socket, io)

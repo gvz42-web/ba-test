@@ -17,6 +17,10 @@ export const useSocketStore = defineStore('socket', () => {
         clients.value = data
     })
 
+    socket.on("disconnect", () => {
+        connected.value = false
+    })
+
     const getClients = computed(() => clients.value)
     const getStatus = computed(() => connected.value)
 

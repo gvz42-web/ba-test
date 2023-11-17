@@ -17,3 +17,13 @@ exports.findOne = async (id) => {
         include: Log
     })
 }
+
+exports.getActive = async () => {
+    return Client.findAll()
+}
+
+exports.getAll = async () => {
+    return Client.findAll({
+        paranoid: false
+    })
+}
